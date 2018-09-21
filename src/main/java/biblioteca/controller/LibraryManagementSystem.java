@@ -9,33 +9,33 @@ public class LibraryManagementSystem {
     private InputDriver inputDriver;
     private Library library;
 
-    public LibraryManagementSystem(OutputDriver outputDriver, Library library) {
-        this.inputDriver = new InputDriver();
+    public LibraryManagementSystem(OutputDriver outputDriver, InputDriver inputDriver, Library library) {
+        this.inputDriver = inputDriver;
         this.outputDriver = outputDriver;
         this.library = library;
     }
 
-    public LibraryManagementSystem(Library library) {
-        this.inputDriver = new InputDriver();
-        this.outputDriver = new OutputDriver();
-        this.library = library;
-    }
-
     public void printWelcomeMessage() {
-        outputDriver.print("Welcome to Biblioteca");
+        outputDriver.print(" Welcome to Biblioteca");
+        outputDriver.print("-----------------------");
     }
 
-    public void printListOfBooks() {
-        outputDriver.print(library.getBooks());
-    }
+    public void showMenu() {
+        int choice;
+        do {
+            Menu[] menu = Menu.values();
+            for (Menu menuItem : menu) {
+                outputDriver.print(menuItem.display());
+            }
+            choice = inputDriver.readMenuChoice();
+            try {
+                Menu menuOption = menu[choice];
+                menuOption.act(library,outputDriver, inputDriver);
 
-    public void printMenu() {
-        outputDriver.printMenu();
-        int choice = inputDriver.getMenuChoice();
-        switch (choice){
-            case 1: outputDriver.printMenu();
-                    break;
-            default:outputDriver.print("Wrong Choice");
-        }
+            } catch (ArrayIndexOutOfBoundsException e) {
+                outputDriver.print("Select a valid option!");
+            }
+
+        } while (choice != 0);
     }
 }

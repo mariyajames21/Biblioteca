@@ -9,14 +9,10 @@ public class OutputDriver {
     }
 
     public void print(List<String> stringList) {
-
-        for (String string : stringList) {
-            System.out.println(string);
-        }
+        System.out.format("%-50s %-50s %-50s\n",stringList.get(0),stringList.get(1),stringList.get(2));
     }
 
-    public void printMenu() {
-        System.out.println("Menu");
-        System.out.println("1.List of Books");
+    public void printAsColumns(List<List<String>> listOfStrings) {
+        listOfStrings.forEach(this::print);
     }
 }

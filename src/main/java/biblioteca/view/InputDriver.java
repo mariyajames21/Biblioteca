@@ -3,8 +3,17 @@ package biblioteca.view;
 import java.util.Scanner;
 
 public class InputDriver {
-    public int getMenuChoice(){
-        Scanner input = new Scanner(System.in);
+    private final Scanner input;
+
+    public InputDriver() {
+        this.input =  new Scanner(System.in);
+    }
+
+    public int readMenuChoice(){
         return input.nextInt();
+    }
+
+    public String readString() {
+        return input.nextLine();
     }
 }
