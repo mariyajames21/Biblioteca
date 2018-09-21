@@ -63,7 +63,17 @@ class MenuTest {
         when(inputDriver.readString()).thenReturn("The Hobbit");
         CHECKOUT_BOOKS.act(library,outputDriver,inputDriver);
         assertFalse(library.contains("The Hobbit"));
+        verify(outputDriver).print("Enter the name of the book.");
+        verify(outputDriver).print("Thank you! Enjoy the book");
     }
 
+    @DisplayName("expects to print message 'That book is not available'")
+    @Test
+    void testForCheckoutBookNotAvailable() {
+        when(inputDriver.readString()).thenReturn("Spy");
+        CHECKOUT_BOOKS.act(library,outputDriver,inputDriver);
+        verify(outputDriver).print("Enter the name of the book.");
+        verify(outputDriver).print("That book is not available");
+    }
 
 }

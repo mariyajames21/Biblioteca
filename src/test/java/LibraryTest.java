@@ -63,6 +63,13 @@ class LibraryTest {
         assertFalse(library.contains(title));
     }
 
+    @DisplayName("expects to return false if the book is not present in the library")
+    @Test
+    void testToCheckOutABookNotAvailable() {
+        String title = "Spy";
+        assertFalse(library.checkOut(title));
+    }
+
 
 
 }

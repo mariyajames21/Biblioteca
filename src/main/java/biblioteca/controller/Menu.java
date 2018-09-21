@@ -22,8 +22,10 @@ public enum Menu {
     CHECKOUT_BOOKS("Checkout books")    {
         @Override
         public void act(Library library, OutputDriver outputDriver, InputDriver inputDriver) {
+            outputDriver.print("Enter the name of the book.");
             inputDriver.readString();
-            library.checkOut(inputDriver.readString());
+            String message = library.checkOut(inputDriver.readString())? "Thank you! Enjoy the book":"That book is not available";
+            outputDriver.print(message);
         }
     };
 

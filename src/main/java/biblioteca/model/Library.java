@@ -18,13 +18,14 @@ public class Library {
         return listOfBooks;
     }
 
-    public void checkOut(String title) {
+    public boolean checkOut(String title) {
         for (Book book : books) {
             if (book.checkTitle(title)) {
                 books.remove(book);
-                return;
+                return true;
             }
         }
+        return false;
     }
 
     public boolean contains(String title) {
