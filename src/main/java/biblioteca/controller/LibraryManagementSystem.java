@@ -24,18 +24,22 @@ public class LibraryManagementSystem {
         int choice;
         do {
             Menu[] menu = Menu.values();
-            for (Menu menuItem : menu) {
-                outputDriver.print(menuItem.display());
-            }
+            printMenu(menu);
             choice = inputDriver.readMenuChoice();
             if(choice<menu.length){
                 Menu menuOption = menu[choice];
-                menuOption.act(library,outputDriver, inputDriver);
+                menuOption.perform(library,outputDriver, inputDriver);
 
             } else {
                 outputDriver.print("Select a valid option!");
             }
 
         } while (choice != 0);
+    }
+
+    private void printMenu(Menu[] menu) {
+        for (Menu menuItem : menu) {
+            outputDriver.print(menuItem.display());
+        }
     }
 }
