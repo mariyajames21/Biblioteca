@@ -13,6 +13,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
 class LibraryManagementSystemTest {
@@ -39,7 +40,7 @@ class LibraryManagementSystemTest {
     void testForPrintWelcomeMessage() {
         libraryManagementSystem.printWelcomeMessage();
         verify(outputDriver).print(" Welcome to Biblioteca");
-        verify(outputDriver).print("-----------------------");
+        verify(outputDriver).printHorizontalLine(15);
 
     }
 
@@ -69,8 +70,6 @@ class LibraryManagementSystemTest {
     @DisplayName("Print the menu and take the action when an invalid option  is selected")
     @Test
     void testForInvalidOption(){
-        List<List<String>> stringList = Arrays.asList(Arrays.asList("The Hobbit", "J R R Tolkien", "1937"),
-                Arrays.asList("The Fault in our stars", "John Green", "2012"));
         when(inputDriver.readMenuChoice()).thenReturn(6).thenReturn(0);
         libraryManagementSystem.showMenu();
         verify(outputDriver,times(2)).print("0.Exit from application");
@@ -86,6 +85,21 @@ class LibraryManagementSystemTest {
         libraryManagementSystem.showMenu();
         verify(outputDriver,times(2)).print("0.Exit from application");
         verify(outputDriver,times(2)).print("1.List of books");
+        verify(outputDriver).print("Thank you! Enjoy the book");
         assertFalse(library.contains("The Hobbit"));
+    }
+
+    @DisplayName("Print the menu and take the action to return book when option 3 is selected")
+    @Test
+    void testForReturnBook(){
+        when(inputDriver.readMenuChoice()).thenReturn(2).thenReturn(3).thenReturn(0);
+        when(inputDriver.readString()).thenReturn("The Hobbit");
+        libraryManagementSystem.showMenu();
+        verify(outputDriver,times(3)).print("0.Exit from application");
+        verify(outputDriver,times(3)).print("1.List of books");
+        verify(outputDriver,times(3)).print("2.Checkout books");
+        verify(outputDriver,times(3)).print("3.Return book");
+        verify(outputDriver).print("Thank you! Enjoy the book");
+        assertTrue(library.contains("The Hobbit"));
     }
 }

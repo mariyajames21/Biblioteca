@@ -17,6 +17,7 @@ class LibraryTest {
 
     private Library library;
     List<Book> books;
+
     @BeforeEach
     void init() {
         books = new ArrayList<>();
@@ -28,7 +29,8 @@ class LibraryTest {
     @DisplayName("expects to print the list of books")
     @Test
     void testForPrintListOfBooks() {
-        List<List<String>> listOfBooks = Arrays.asList(Arrays.asList("The Hobbit", "J R R Tolkien", "1937"), Arrays.asList("The  Fault in our stars", "John Green", "2014"));
+        List<List<String>> listOfBooks = Arrays.asList(Arrays.asList("The Hobbit", "J R R Tolkien", "1937"),
+                Arrays.asList("The  Fault in our stars", "John Green", "2014"));
         assertEquals(listOfBooks, library.getBooks());
     }
 
@@ -59,7 +61,7 @@ class LibraryTest {
     @Test
     void testToCheckOutABook() {
         String title = "The Hobbit";
-        library.checkOut(title);
+        assertTrue(library.checkOut(title));
         assertFalse(library.contains(title));
     }
 
@@ -71,5 +73,14 @@ class LibraryTest {
     }
 
 
+    @DisplayName("expects to return the book")
+    @Test
+    void testToReturnBook() {
+        String title="The Hobbit";
+        assertTrue(library.checkOut(title));
+        assertFalse(library.contains(title));
+        library.returnBook(title);
+        assertTrue(library.contains(title));
+    }
 
 }

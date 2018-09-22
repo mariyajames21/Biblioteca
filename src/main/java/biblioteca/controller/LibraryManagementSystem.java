@@ -17,7 +17,7 @@ public class LibraryManagementSystem {
 
     public void printWelcomeMessage() {
         outputDriver.print(" Welcome to Biblioteca");
-        outputDriver.print("-----------------------");
+        outputDriver.printHorizontalLine(15);
     }
 
     public void showMenu() {

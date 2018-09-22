@@ -8,7 +8,7 @@ import java.util.Objects;
 //Details of a book
 public class Book {
     private final String title;
-    private final String author;
+    private String author;
     private String year;
 
 
@@ -19,7 +19,7 @@ public class Book {
     }
 
     public List<String> getBookDetails() {
-        return new ArrayList<>(Arrays.asList(title,author,year));
+        return new ArrayList<>(Arrays.asList(title, author, year));
     }
 
     public boolean checkTitle(String title) {
@@ -29,9 +29,7 @@ public class Book {
     @Override
     public boolean equals(Object o) {
         Book book = (Book) o;
-        return Objects.equals(title, book.title) &&
-                Objects.equals(author, book.author) &&
-                Objects.equals(year, book.year);
+        return Objects.equals(title, book.title);
     }
 
     @Override

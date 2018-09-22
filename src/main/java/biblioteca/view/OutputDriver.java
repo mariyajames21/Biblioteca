@@ -15,4 +15,11 @@ public class OutputDriver {
     public void printAsColumns(List<List<String>> listOfStrings) {
         listOfStrings.forEach(this::print);
     }
+
+    public void printHorizontalLine(int length) {
+        for (int i = 0; i < length; i++) {
+            System.out.print("-");
+        }
+        System.out.println();
+    }
 }

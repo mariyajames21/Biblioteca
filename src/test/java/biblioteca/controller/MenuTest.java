@@ -76,4 +76,13 @@ class MenuTest {
         verify(outputDriver).print("That book is not available");
     }
 
+    @DisplayName("expects to add the book back to the library")
+    @Test
+    void testForReturnBook() {
+        when(inputDriver.readString()).thenReturn("The Hobbit");
+        CHECKOUT_BOOKS.act(library,outputDriver,inputDriver);
+        Menu.RETURN_BOOK.act(library,outputDriver,inputDriver);
+        assertTrue(library.contains("The Hobbit"));
+    }
+
 }
