@@ -1,7 +1,9 @@
 package biblioteca.controller;
 
 import biblioteca.model.Book;
+import biblioteca.model.BookList;
 import biblioteca.model.Library;
+import biblioteca.model.Movie;
 import biblioteca.view.InputDriver;
 import biblioteca.view.OutputDriver;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,9 +32,13 @@ class MenuTest {
     @BeforeEach
     void init() {
         List<Book> books = new ArrayList<>();
+        List<Movie> movies = new ArrayList<>();
         books.add(new Book("The Hobbit", "J R R Tolkien", "1937"));
         books.add(new Book("The Fault in our stars", "John Green", "2012"));
-        library = new Library(books);
+        BookList bookList = new BookList(books);
+        movies.add(new Movie("Movie 1","2015","Director 1",7));
+        movies.add( new Movie("Movie 2","1990","Director 2",0));
+        library = new Library(bookList, movies);
         outputDriver = mock(OutputDriver.class);
         inputDriver = mock(InputDriver.class);
     }
@@ -62,7 +68,7 @@ class MenuTest {
     void testForCheckout() {
         when(inputDriver.readString()).thenReturn("The Hobbit");
         CHECKOUT_BOOKS.act(library,outputDriver,inputDriver);
-        assertFalse(library.contains("The Hobbit"));
+        assertFalse(library.containsBook("The Hobbit"));
         verify(outputDriver).print("Enter the name of the book.");
         verify(outputDriver).print("Thank you! Enjoy the book");
     }
@@ -76,13 +82,13 @@ class MenuTest {
         verify(outputDriver).print("That book is not available");
     }
 
-    @DisplayName("expects to add the book back to the library")
+    @DisplayName("expects to addBook the book back to the library")
     @Test
     void testForReturnBook() {
         when(inputDriver.readString()).thenReturn("The Hobbit");
         CHECKOUT_BOOKS.act(library,outputDriver,inputDriver);
         Menu.RETURN_BOOK.act(library,outputDriver,inputDriver);
-        assertTrue(library.contains("The Hobbit"));
+        assertTrue(library.containsBook("The Hobbit"));
     }
 
 }

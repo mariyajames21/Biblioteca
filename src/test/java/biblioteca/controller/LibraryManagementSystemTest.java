@@ -1,7 +1,9 @@
 package biblioteca.controller;
 
 import biblioteca.model.Book;
+import biblioteca.model.BookList;
 import biblioteca.model.Library;
+import biblioteca.model.Movie;
 import biblioteca.view.InputDriver;
 import biblioteca.view.OutputDriver;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,17 +23,20 @@ class LibraryManagementSystemTest {
     private OutputDriver outputDriver;
     private InputDriver inputDriver;
     private Library library;
-    private List<Book> books;
-
+    private List<Movie> movies;
 
     @BeforeEach
     void init() {
         outputDriver = mock(OutputDriver.class);
         inputDriver = mock(InputDriver.class);
-        books = new ArrayList<>();
+        movies = new ArrayList<>();
+        List<Book> books = new ArrayList<>();
         books.add(new Book("The Hobbit", "J R R Tolkien", "1937"));
         books.add(new Book("The Fault in our stars", "John Green", "2012"));
-        library=new Library(books);
+        BookList bookList = new BookList(books);
+        movies.add(new Movie("Movie 1","2015","Director 1",7));
+        movies.add( new Movie("Movie 2","1990","Director 2",0));
+        library=new Library(bookList, movies);
         libraryManagementSystem = new LibraryManagementSystem(outputDriver,inputDriver,library);
     }
 
@@ -86,7 +91,7 @@ class LibraryManagementSystemTest {
         verify(outputDriver,times(2)).print("0.Exit from application");
         verify(outputDriver,times(2)).print("1.List of books");
         verify(outputDriver).print("Thank you! Enjoy the book");
-        assertFalse(library.contains("The Hobbit"));
+        assertFalse(library.containsBook("The Hobbit"));
     }
 
     @DisplayName("Print the menu and take the action to return book when option 3 is selected")
@@ -100,6 +105,6 @@ class LibraryManagementSystemTest {
         verify(outputDriver,times(3)).print("2.Checkout books");
         verify(outputDriver,times(3)).print("3.Return book");
         verify(outputDriver).print("Thank you! Enjoy the book");
-        assertTrue(library.contains("The Hobbit"));
+        assertTrue(library.containsBook("The Hobbit"));
     }
 }

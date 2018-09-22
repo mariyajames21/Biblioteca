@@ -37,4 +37,12 @@ public class Book {
         return Objects.hash(title, author, year);
     }
 
+    @Override
+    public String toString() {
+        return "Book{" +
+                "title='" + title + '\'' +
+                ", author='" + author + '\'' +
+                ", year='" + year + '\'' +
+                '}';
+    }
 }

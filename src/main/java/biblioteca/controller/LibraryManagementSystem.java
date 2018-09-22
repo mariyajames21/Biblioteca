@@ -28,11 +28,11 @@ public class LibraryManagementSystem {
                 outputDriver.print(menuItem.display());
             }
             choice = inputDriver.readMenuChoice();
-            try {
+            if(choice<menu.length){
                 Menu menuOption = menu[choice];
                 menuOption.act(library,outputDriver, inputDriver);
 
-            } catch (ArrayIndexOutOfBoundsException e) {
+            } else {
                 outputDriver.print("Select a valid option!");
             }
 

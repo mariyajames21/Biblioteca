@@ -36,7 +36,8 @@ public enum Menu {
         public void act(Library library, OutputDriver outputDriver, InputDriver inputDriver) {
             outputDriver.print("Enter the name of the book");
             inputDriver.readString();
-            library.returnBook(inputDriver.readString());
+            String message = library.returnBook(inputDriver.readString()) ? "Thank you for returning the book" : "That is not a valid book to return";
+            outputDriver.print(message);
         }
     };
 

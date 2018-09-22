@@ -1,12 +1,13 @@
 import biblioteca.model.Book;
+import biblioteca.model.BookList;
 import biblioteca.model.Library;
+import biblioteca.model.Movie;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -16,14 +17,19 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class LibraryTest {
 
     private Library library;
-    List<Book> books;
+    private BookList bookList;
+    private List<Movie> movies;
 
     @BeforeEach
     void init() {
-        books = new ArrayList<>();
+        List<Book> books = new ArrayList<>();
+        movies = new ArrayList<>();
         books.add(new Book("The Hobbit", "J R R Tolkien", "1937"));
         books.add(new Book("The  Fault in our stars", "John Green", "2014"));
-        library = new Library(books);
+        bookList = new BookList(books);
+        movies.add(new Movie("Movie 1","2015","Director 1",7));
+        movies.add( new Movie("Movie 2","1990","Director 2",0));
+        library = new Library(bookList, movies);
     }
 
     @DisplayName("expects to print the list of books")
@@ -38,7 +44,8 @@ class LibraryTest {
     @Test
     void testForPrintIfListOfBooksIsEmpty() {
         List<Book> books = new ArrayList<>();
-        Library library = new Library(books);
+        bookList = new BookList(books);
+        Library library = new Library(bookList, movies);
         assertEquals(books, library.getBooks());
     }
 
@@ -46,14 +53,14 @@ class LibraryTest {
     @Test
     void testForContains() {
         String title = "The Hobbit";
-        assertTrue(library.contains(title));
+        assertTrue(library.containsBook(title));
     }
 
     @DisplayName("expects false if the book is in the library")
     @Test
     void testForNotContains() {
         String title = "Spy";
-        assertFalse(library.contains(title));
+        assertFalse(library.containsBook(title));
     }
 
 
@@ -62,7 +69,7 @@ class LibraryTest {
     void testToCheckOutABook() {
         String title = "The Hobbit";
         assertTrue(library.checkOut(title));
-        assertFalse(library.contains(title));
+        assertFalse(library.containsBook(title));
     }
 
     @DisplayName("expects to return false if the book is not present in the library")
@@ -78,9 +85,17 @@ class LibraryTest {
     void testToReturnBook() {
         String title="The Hobbit";
         assertTrue(library.checkOut(title));
-        assertFalse(library.contains(title));
+        assertFalse(library.containsBook(title));
         library.returnBook(title);
-        assertTrue(library.contains(title));
+        assertTrue(library.containsBook(title));
+    }
+
+    @DisplayName("expects to return the details of all movies")
+    @Test
+    void testToGetMovieDetails(){
+        List<List<String>> listOfMovies = Arrays.asList(Arrays.asList("Movie 1","2015","Director 1","7"),
+                Arrays.asList("Movie 2","1990","Director 2","Unrated"));
+        assertEquals(listOfMovies, library.getMovies());
     }
 
 }

@@ -6,58 +6,58 @@ import java.util.Objects;
 
 //Books in a library
 public class Library {
-    private final List<Book> books;
-    private List<Book> checkedOutBooks;
 
-    public Library(List<Book> books) {
-        this.books = books;
-        this.checkedOutBooks = new ArrayList<>();
+    private final BookList bookList;
+    private BookList checkedOutBookList;
+    private final List<Movie> movieList;
+
+    public Library(BookList bookList, List<Movie> movieList) {
+        this.bookList = bookList;
+        this.movieList = movieList;
+        checkedOutBookList = new BookList(new ArrayList<>());
     }
 
-    public List<List<String>> getBooks() {
-        List<List<String>> listOfBooks = new ArrayList<>();
-        books.forEach(book -> listOfBooks.add(book.getBookDetails()));
-        return listOfBooks;
+    public List<List<String>> getMovies() {
+        List<List<String>> listOfMovies = new ArrayList<>();
+        movieList.forEach(movie -> listOfMovies.add(movie.getDetails()));
+        return listOfMovies;
+    }
+
+    public boolean containsBook(String title) {
+        return bookList.containsBook(title);
     }
 
     public boolean checkOut(String title) {
-        for (Book book : books) {
-            if (book.checkTitle(title)) {
-                checkedOutBooks.add(book);
-                books.remove(book);
-                return true;
-            }
+        Book checkedOutBook = bookList.removeBookIfPresent(title);
+        if(checkedOutBook!=null){
+            checkedOutBookList.addBook(checkedOutBook);
+            return true;
         }
         return false;
     }
 
-    public boolean contains(String title) {
-        for (Book book : books) {
-            if (book.checkTitle(title)) {
-                return true;
-            }
+    public boolean returnBook(String title) {
+        Book returnedBook = checkedOutBookList.removeBookIfPresent(title);
+        if(returnedBook!=null){
+            bookList.addBook(returnedBook);
+            return true;
         }
         return false;
     }
 
+    public List<List<String>> getBooks() {
+        return bookList.getBooks();
+    }
     @Override
     public boolean equals(Object o) {
         Library library = (Library) o;
-        return Objects.equals(books, library.books);
+        return Objects.equals(bookList, library.bookList);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(books);
+        return Objects.hash(bookList);
     }
 
-    public void returnBook(String title) {
-        for (Book book:checkedOutBooks) {
-            if(book.checkTitle(title)){
-                checkedOutBooks.remove(book);
-                books.add(book);
-                return;
-            }
-        }
-    }
+
 }
