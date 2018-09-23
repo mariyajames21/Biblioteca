@@ -22,14 +22,14 @@ class BookTest {
     @Test
     void testForGetDetails() {
         bookList = Arrays.asList("The Hobbit","J R R Tolkien", "1937");
-        assertEquals(bookList, book1.getBookDetails());
+        assertEquals(bookList, book1.getDetails());
     }
 
     @DisplayName("should return 'The fault in our stars'")
     @Test
     void testForGetDetailsTwo() {
         List<String> bookList = Arrays.asList("The fault in our stars", "John Green", "2012");
-        assertEquals(bookList, book2.getBookDetails());
+        assertEquals(bookList, book2.getDetails());
     }
 
     @DisplayName("expects two books with same title to be equal")

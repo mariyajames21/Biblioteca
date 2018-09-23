@@ -1,9 +1,6 @@
 package biblioteca.controller;
 
-import biblioteca.model.Book;
-import biblioteca.model.BookList;
-import biblioteca.model.Library;
-import biblioteca.model.Movie;
+import biblioteca.model.*;
 import biblioteca.view.InputDriver;
 import biblioteca.view.OutputDriver;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,14 +28,13 @@ class MenuTest {
 
     @BeforeEach
     void init() {
-        List<Book> books = new ArrayList<>();
-        List<Movie> movies = new ArrayList<>();
-        books.add(new Book("The Hobbit", "J R R Tolkien", "1937"));
-        books.add(new Book("The Fault in our stars", "John Green", "2012"));
-        BookList bookList = new BookList(books);
-        movies.add(new Movie("Movie 1", "2015", "Director 1", 7));
-        movies.add(new Movie("Movie 2", "1990", "Director 2", 0));
-        library = new Library(bookList, movies);
+        List<Item> items = new ArrayList<>();
+        items.add(new Book("The Hobbit", "J R R Tolkien", "1937"));
+        items.add(new Book("The  Fault in our stars", "John Green", "2014"));
+        items.add(new Movie("Movie 1", "2015", "Director 1", 7));
+        items.add(new Movie("Movie 2", "1990", "Director 2", 0));
+        ItemList itemList = new ItemList(items);
+        library = new Library(itemList);
         outputDriver = mock(OutputDriver.class);
         inputDriver = mock(InputDriver.class);
     }
@@ -68,7 +64,7 @@ class MenuTest {
     void testForCheckout() {
         when(inputDriver.readString()).thenReturn("The Hobbit");
         CHECKOUT_BOOKS.perform(library, outputDriver, inputDriver);
-        assertFalse(library.containsBook("The Hobbit"));
+        assertFalse(library.containsItem("The Hobbit", ItemType.BOOK));
         verify(outputDriver).print("Enter the name of the book.");
         verify(outputDriver).print("Thank you! Enjoy the book");
     }
@@ -82,13 +78,13 @@ class MenuTest {
         verify(outputDriver).print("That book is not available");
     }
 
-    @DisplayName("expects to addBook the book back to the library")
+    @DisplayName("expects to addItem the book back to the library")
     @Test
     void testForReturnBook() {
         when(inputDriver.readString()).thenReturn("The Hobbit");
         CHECKOUT_BOOKS.perform(library, outputDriver, inputDriver);
         Menu.RETURN_BOOK.perform(library, outputDriver, inputDriver);
-        assertTrue(library.containsBook("The Hobbit"));
+        assertTrue(library.containsItem("The Hobbit", ItemType.BOOK));
     }
 
     @DisplayName("expects to print message 'That is not a valid book' if the title is wrong")

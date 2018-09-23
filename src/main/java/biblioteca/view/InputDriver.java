@@ -10,7 +10,7 @@ public class InputDriver {
     }
 
     public int readMenuChoice(){
-        return input.nextInt();
+        return Integer.parseInt(input.nextLine());
     }
 
     public String readString() {

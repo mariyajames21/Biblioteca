@@ -8,17 +8,17 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
-class ExitCommandTest {
-
+class ListMoviesCommandTest {
     private Library library;
     private OutputDriver outputDriver;
     private InputDriver inputDriver;
-    private ExitCommand exitCommand;
+    private ListMoviesCommand listMoviesCommand;
 
 
     @BeforeEach
@@ -32,14 +32,18 @@ class ExitCommandTest {
         library = new Library(itemList);
         outputDriver = mock(OutputDriver.class);
         inputDriver = mock(InputDriver.class);
-        exitCommand = new ExitCommand();
+        listMoviesCommand = new ListMoviesCommand();
     }
 
-    @DisplayName("expects to return 'Exit from application' for LIST_OF_BOOKS enum")
+
+    @DisplayName("expects to print the booklist")
     @Test
-    void testForExitFromApplication() {
-        exitCommand.perform(library, outputDriver, inputDriver);
-        verify(outputDriver).print("Quiting...");
+    void testForPrintListOfBooks() {
+        List<List<String>> stringList = Arrays.asList(Arrays.asList("Movie 1", "2015", "Director 1", "7"),
+                Arrays.asList("Movie 2", "1990", "Director 2", "Unrated"));
+        listMoviesCommand.perform(library, outputDriver, inputDriver);
+        verify(outputDriver).printAsColumns(stringList);
     }
+
 
 }

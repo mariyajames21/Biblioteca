@@ -7,56 +7,51 @@ import java.util.Objects;
 //Books in a library
 public class Library {
 
-    private final BookList bookList;
-    private BookList checkedOutBookList;
-    private final List<Movie> movieList;
+    private final ItemList itemList;
+    private ItemList checkedOutItemList;
 
-    public Library(BookList bookList, List<Movie> movieList) {
-        this.bookList = bookList;
-        this.movieList = movieList;
-        checkedOutBookList = new BookList(new ArrayList<>());
+
+    public Library(ItemList itemList) {
+        this.itemList = itemList;
+        checkedOutItemList = new ItemList(new ArrayList<>());
     }
 
-    public List<List<String>> getMovies() {
-        List<List<String>> listOfMovies = new ArrayList<>();
-        movieList.forEach(movie -> listOfMovies.add(movie.getDetails()));
-        return listOfMovies;
+
+    public boolean containsItem(String title, ItemType type) {
+        return itemList.containsItem(title, type);
     }
 
-    public boolean containsBook(String title) {
-        return bookList.containsBook(title);
-    }
-
-    public boolean checkOut(String title) {
-        Book checkedOutBook = bookList.removeBookIfPresent(title);
-        if(checkedOutBook!=null){
-            checkedOutBookList.addBook(checkedOutBook);
+    public boolean checkOutItem(String title, ItemType type) {
+        Item checkedOutItem = itemList.removeItemIfPresent(title, type);
+        if (checkedOutItem != null) {
+            checkedOutItemList.addItem(checkedOutItem);
             return true;
         }
         return false;
     }
 
-    public boolean returnBook(String title) {
-        Book returnedBook = checkedOutBookList.removeBookIfPresent(title);
-        if(returnedBook!=null){
-            bookList.addBook(returnedBook);
+    public boolean returnItem(String title, ItemType type) {
+        Item returnedItem = checkedOutItemList.removeItemIfPresent(title, type);
+        if (returnedItem != null) {
+            itemList.addItem(returnedItem);
             return true;
         }
         return false;
     }
 
-    public List<List<String>> getBooks() {
-        return bookList.getBooks();
+    public List<List<String>> getDetails(ItemType type) {
+        return itemList.getItem(type);
     }
+
     @Override
     public boolean equals(Object o) {
         Library library = (Library) o;
-        return Objects.equals(bookList, library.bookList);
+        return Objects.equals(itemList, library.itemList);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(bookList);
+        return Objects.hash(itemList);
     }
 
 

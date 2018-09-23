@@ -7,11 +7,11 @@ import biblioteca.view.OutputDriver;
 
 import java.util.Arrays;
 
-public class ListBooksCommand implements Command {
-
+public class ListMoviesCommand implements Command {
+    @Override
     public void perform(Library library, OutputDriver outputDriver, InputDriver inputDriver) {
-        outputDriver.print(Arrays.asList("Title", "Author", "Year"));
-        outputDriver.printHorizontalLine(115);
-        outputDriver.printAsColumns(library.getDetails(ItemType.BOOK));
+        outputDriver.print(Arrays.asList("Title", "Year", "Director","Rating"));
+        outputDriver.printHorizontalLine(160);
+        outputDriver.printAsColumns(library.getDetails(ItemType.MOVIE));
     }
 }

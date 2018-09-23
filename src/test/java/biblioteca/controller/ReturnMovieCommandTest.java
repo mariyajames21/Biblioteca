@@ -15,11 +15,11 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-class ReturnBookCommandTest {
+class ReturnMovieCommandTest {
     private Library library;
     private OutputDriver outputDriver;
     private InputDriver inputDriver;
-    private ReturnBookCommand returnBookCommand;
+    private ReturnMovieCommand returnMovieCommand;
 
 
     @BeforeEach
@@ -33,33 +33,33 @@ class ReturnBookCommandTest {
         library = new Library(itemList);
         outputDriver = mock(OutputDriver.class);
         inputDriver = mock(InputDriver.class);
-        returnBookCommand = new ReturnBookCommand();
+        returnMovieCommand = new ReturnMovieCommand();
     }
 
-    @DisplayName("expects to addItem the book back to the library")
+    @DisplayName("expects to add movie  back to the library")
     @Test
-    void testForReturnBook() {
-        when(inputDriver.readString()).thenReturn("The Hobbit");
-        returnBookCommand.perform(library,outputDriver,inputDriver);
-        assertTrue(library.containsItem("The Hobbit", ItemType.BOOK));
+    void testForReturnMovie() {
+        when(inputDriver.readString()).thenReturn("Movie 1").thenReturn("Movie 1");
+        returnMovieCommand.perform(library,outputDriver,inputDriver);
+        assertTrue(library.containsItem("Movie 1", ItemType.BOOK));
     }
 
-    @DisplayName("expects to print message 'That is not a valid book' if the title is wrong")
+    @DisplayName("expects to print message 'That is not a valid movie' if the title is wrong")
     @Test
-    void testForInvalidReturnBookTitle() {
+    void testForInvalidReturnMovieTitle() {
         when(inputDriver.readString()).thenReturn("Spy");
-        returnBookCommand.perform(library,outputDriver,inputDriver);
-        verify(outputDriver).print("Enter the name of the book");
-        verify(outputDriver).print("That is not a valid book to return");
+        returnMovieCommand.perform(library,outputDriver,inputDriver);
+        verify(outputDriver).print("Enter the name of the movie");
+        verify(outputDriver).print("That is not a valid movie to return");
     }
 
-    @DisplayName("expects to print message 'That is not a valid book' if the book has not already been checked out")
+    @DisplayName("expects to print message 'That is not a valid movie' if the movie has not already been checked out")
     @Test
-    void testForInvalidReturnBook() {
-        when(inputDriver.readString()).thenReturn("The Hobbit");
-        returnBookCommand.perform(library,outputDriver,inputDriver);
-        verify(outputDriver).print("Enter the name of the book");
-        verify(outputDriver).print("That is not a valid book to return");
+    void testForInvalidReturnMovie() {
+        when(inputDriver.readString()).thenReturn("Movie 1");
+        returnMovieCommand.perform(library,outputDriver,inputDriver);
+        verify(outputDriver).print("Enter the name of the movie");
+        verify(outputDriver).print("That is not a valid movie to return");
     }
 
 }

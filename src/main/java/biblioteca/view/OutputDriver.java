@@ -9,7 +9,8 @@ public class OutputDriver {
     }
 
     public void print(List<String> stringList) {
-        System.out.format("%-50s %-50s %-50s\n",stringList.get(0),stringList.get(1),stringList.get(2));
+        stringList.forEach(string->System.out.format("%-50s",string));
+        System.out.println();
     }
 
     public void printAsColumns(List<List<String>> listOfStrings) {

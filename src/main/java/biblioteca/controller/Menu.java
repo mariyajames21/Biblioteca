@@ -8,8 +8,11 @@ public enum Menu {
 
     EXIT("Exit from application",new ExitCommand()),
     LIST_OF_BOOKS("List of books", new ListBooksCommand()),
-    CHECKOUT_BOOKS("Checkout books", new CheckOuBookCommand()) ,
-    RETURN_BOOK("Return book", new ReturnBookCommand());
+    CHECKOUT_BOOKS("Checkout books", new CheckOutBookCommand()) ,
+    RETURN_BOOK("Return book", new ReturnBookCommand()),
+    LIST_OF_MOVIES("List of movies",new ListMoviesCommand()),
+    CHECK_OUT_MOVIES("Checkout movies",new CheckOutMoviesCommand()),
+    RETURN_MOVIE("Return movie",new ReturnMovieCommand());
 
     private String displayString;
     private Command action;
