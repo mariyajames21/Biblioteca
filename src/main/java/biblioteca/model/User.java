@@ -8,17 +8,18 @@ public class User {
     private String password;
     private ItemList listOfCheckedOutItems;
 
-    public User(String userNumber,String password) {
+    public User(String userNumber, String password) {
         this.userNumber = userNumber;
         this.password = password;
         listOfCheckedOutItems = new ItemList();
     }
 
     public User() {
+        listOfCheckedOutItems = new ItemList();
     }
 
-    public ItemList getItemsCheckedOut(){
-        return listOfCheckedOutItems;
+    public Item returnItemIfCheckedOut(String title, ItemType type) {
+        return listOfCheckedOutItems.removeItemIfPresent(title, type);
     }
 
     public void addItem(Item checkedOutItem) {

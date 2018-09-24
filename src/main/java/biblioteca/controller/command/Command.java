@@ -6,5 +6,5 @@ import biblioteca.view.InputDriver;
 import biblioteca.view.OutputDriver;
 
 public interface Command {
-    void perform(Library library, User user, InputDriver inputDriver, OutputDriver outputDriver);
+    void perform(Library library, InputDriver inputDriver, OutputDriver outputDriver);
 }

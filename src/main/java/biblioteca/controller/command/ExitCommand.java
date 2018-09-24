@@ -6,7 +6,7 @@ import biblioteca.view.InputDriver;
 import biblioteca.view.OutputDriver;
 
 public class ExitCommand implements Command {
-    public void perform(Library library, User user, InputDriver inputDriver, OutputDriver outputDriver) {
+    public void perform(Library library, InputDriver inputDriver, OutputDriver outputDriver) {
         outputDriver.print("Quiting...");
     }
 

@@ -10,7 +10,7 @@ import java.util.Arrays;
 
 public class ListBooksCommand implements Command {
 
-    public void perform(Library library, User user, InputDriver inputDriver, OutputDriver outputDriver) {
+    public void perform(Library library,  InputDriver inputDriver, OutputDriver outputDriver) {
         outputDriver.print(Arrays.asList("Title", "Author", "Year"));
         outputDriver.printHorizontalLine(115);
         outputDriver.printAsColumns(library.getDetails(ItemType.BOOK));

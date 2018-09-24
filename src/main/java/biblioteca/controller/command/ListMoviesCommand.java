@@ -10,7 +10,7 @@ import java.util.Arrays;
 
 public class ListMoviesCommand implements Command {
     @Override
-    public void perform(Library library, User user, InputDriver inputDriver, OutputDriver outputDriver) {
+    public void perform(Library library,  InputDriver inputDriver, OutputDriver outputDriver) {
         outputDriver.print(Arrays.asList("Title", "Year", "Director","Rating"));
         outputDriver.printHorizontalLine(160);
         outputDriver.printAsColumns(library.getDetails(ItemType.MOVIE));

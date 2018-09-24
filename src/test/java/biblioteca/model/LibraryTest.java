@@ -84,7 +84,7 @@ class LibraryTest {
         String title = "The Hobbit";
         assertTrue(library.checkOutItem(title, BOOK, loggedInUser));
         assertFalse(library.containsItem(title, BOOK));
-        library.returnItem(title, BOOK);
+        library.returnItem(title, BOOK,loggedInUser);
         assertTrue(library.containsItem(title, BOOK));
     }
 
@@ -123,7 +123,7 @@ class LibraryTest {
     @DisplayName("expects to check out a item")
     @Test
     void testToCheckOutAItem() {
-        String title = "Item 1";
+        String title = "Movie 1";
         assertTrue(library.checkOutItem(title,MOVIE, loggedInUser));
         assertFalse(library.containsItem(title,MOVIE));
     }
@@ -142,7 +142,7 @@ class LibraryTest {
         String title = "Movie 1";
         assertTrue(library.checkOutItem(title,MOVIE, loggedInUser));
         assertFalse(library.containsItem(title,MOVIE));
-        library.returnItem(title,MOVIE);
+        library.returnItem(title,MOVIE,loggedInUser);
         assertTrue(library.containsItem(title,MOVIE));
     }
 
@@ -150,6 +150,6 @@ class LibraryTest {
     @Test
     void testToNotReturnAWrongBook() {
         String title = "Movie";
-        assertFalse(library.returnItem(title,MOVIE));
+        assertFalse(library.returnItem(title,MOVIE,loggedInUser));
     }
 }

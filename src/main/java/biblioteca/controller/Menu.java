@@ -14,7 +14,8 @@ public enum Menu {
     RETURN_BOOK("Return book", new AuthenticatorCommand(new ReturnBookCommand())),
     LIST_OF_MOVIES("List of movies",new ListMoviesCommand()),
     CHECK_OUT_MOVIES("Checkout movies",new AuthenticatorCommand(new CheckOutMoviesCommand())),
-    RETURN_MOVIE("Return movie",new AuthenticatorCommand(new ReturnMovieCommand()));
+    RETURN_MOVIE("Return movie",new AuthenticatorCommand(new ReturnMovieCommand())),
+    LOG_OUT("Log out from the application",new AuthenticatorCommand(new LogOutCommand()));
 
     private String displayString;
     private Command action;
@@ -28,7 +29,7 @@ public enum Menu {
         return this.ordinal() + "." + displayString;
     }
 
-    public void perform(Library library, User user, OutputDriver outputDriver, InputDriver inputDriver) {
-        this.action.perform(library, user, inputDriver, outputDriver);
+    public void perform(Library library ,OutputDriver outputDriver, InputDriver inputDriver) {
+        this.action.perform(library, inputDriver, outputDriver);
     }
 }

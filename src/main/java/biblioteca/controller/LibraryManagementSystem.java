@@ -2,24 +2,20 @@ package biblioteca.controller;
 
 import biblioteca.model.Library;
 import biblioteca.model.User;
-import biblioteca.model.UserList;
 import biblioteca.view.InputDriver;
 import biblioteca.view.OutputDriver;
 
-import java.util.Arrays;
 
 public class LibraryManagementSystem {
     private OutputDriver outputDriver;
     private InputDriver inputDriver;
     private Library library;
-    private User user;
 
 
     public LibraryManagementSystem(OutputDriver outputDriver, InputDriver inputDriver, Library library) {
         this.inputDriver = inputDriver;
         this.outputDriver = outputDriver;
         this.library = library;
-        user = new User();
     }
 
 
@@ -36,7 +32,7 @@ public class LibraryManagementSystem {
             choice = inputDriver.readMenuChoice();
             if(choice<menu.length){
                 Menu menuOption = menu[choice];
-                menuOption.perform(library,user,outputDriver, inputDriver);
+                menuOption.perform(library,outputDriver, inputDriver);
 
             } else {
                 outputDriver.print("Select a valid option!");

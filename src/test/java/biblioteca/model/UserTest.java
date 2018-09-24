@@ -5,6 +5,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static biblioteca.model.ItemType.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class UserTest {
@@ -19,7 +20,7 @@ class UserTest {
     @Test
     void testForCheckedOutItemList() {
         user.addItem(new Book("The Hobbit", "J R R Tolkien", "1937"));
-        assertTrue(user.getItemsCheckedOut().containsItem("The Hobbit", BOOK));
+        assertEquals(user.returnItemIfCheckedOut("The Hobbit",BOOK),new Book("The Hobbit", "J R R Tolkien", "1937"));
     }
 
 }
