@@ -13,19 +13,19 @@ class UserListTest {
     private UserList userList;
     @BeforeEach
     void init(){
-        userList= new UserList(Arrays.asList(new User("123-4567","qwertyuiop"),new User("098-7654","fghjkl")));
+        userList= new UserList(Arrays.asList(new User(name, email, pnoneNumber, "123-4567","qwertyuiop"),new User(name, email, pnoneNumber, "098-7654","fghjkl")));
     }
     @DisplayName("returns true if the usernumber and password are correct")
     @Test
     void testForCorrectUserDetails(){
-        User user=new User("123-4567","qwertyuiop");
+        User user=new User(name, email, pnoneNumber, "123-4567","qwertyuiop");
         assertEquals(user,userList.containsUser(user));
     }
 
     @DisplayName("returns false if the usernumber and password are incorrect")
     @Test
     void testForWrongUserDetails(){
-        User user = new User("345-6789","xcvbn");
+        User user = new User(name, email, pnoneNumber, "345-6789","xcvbn");
         assertNull(userList.containsUser(user));
     }
 

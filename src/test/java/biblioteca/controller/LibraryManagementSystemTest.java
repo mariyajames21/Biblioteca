@@ -20,7 +20,7 @@ class LibraryManagementSystemTest {
     private OutputDriver outputDriver;
     private InputDriver inputDriver;
     private Library library;
-    User user = new User("123-4567","qwertyuiop");
+    User user = new User(name, email, pnoneNumber, "123-4567","qwertyuiop");
 
 
     @BeforeEach

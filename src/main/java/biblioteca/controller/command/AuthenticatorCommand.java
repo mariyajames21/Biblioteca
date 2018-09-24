@@ -2,7 +2,6 @@ package biblioteca.controller.command;
 
 import biblioteca.model.Library;
 import biblioteca.model.User;
-import biblioteca.model.UserList;
 import biblioteca.view.InputDriver;
 import biblioteca.view.OutputDriver;
 

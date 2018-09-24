@@ -13,7 +13,7 @@ class UserTest {
 
     @BeforeEach
     void init() {
-        user = new User("123-4567","password");
+        user = new User(name, email, pnoneNumber, "123-4567","password");
     }
 
     @DisplayName("should add an item to the checkedout item list")

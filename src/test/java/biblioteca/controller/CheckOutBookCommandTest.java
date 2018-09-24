@@ -9,7 +9,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -23,7 +22,7 @@ class CheckOutBookCommandTest {
     private OutputDriver outputDriver;
     private InputDriver inputDriver;
     private CheckOutBookCommand checkOutBookCommand;
-    User user = new User("123-4567","qwertyuiop");
+    User user = new User(name, email, pnoneNumber, "123-4567","qwertyuiop");
 
     @BeforeEach
     void init() {

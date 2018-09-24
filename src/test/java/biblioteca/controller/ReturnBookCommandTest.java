@@ -9,7 +9,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -22,7 +21,7 @@ class ReturnBookCommandTest {
     private OutputDriver outputDriver;
     private InputDriver inputDriver;
     private ReturnBookCommand returnBookCommand;
-    private User user= new User("123-4567","qwertyuiop");
+    private User user= new User(name, email, pnoneNumber, "123-4567","qwertyuiop");
 
 
     @BeforeEach

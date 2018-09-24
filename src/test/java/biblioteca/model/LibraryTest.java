@@ -17,7 +17,7 @@ class LibraryTest {
 
     private Library library;
     private ItemList itemList;
-    private User loggedInUser = new User("123-4567","qwertyuiop");
+    private User loggedInUser = new User(name, email, pnoneNumber, "123-4567","qwertyuiop");
 
     @BeforeEach
     void init() {

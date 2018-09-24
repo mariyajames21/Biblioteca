@@ -19,8 +19,8 @@ public class Library {
     }
 
     private void createDummyUsers() {
-        userList = new UserList(Arrays.asList(new User("123-4567", "qwertyuiop"),
-                new User("098-7654", "password")));
+        userList = new UserList(Arrays.asList(new User("User 1", "user1@gmail.com", "1234567890", "123-4567", "qwertyuiop"),
+                new User("User 2", "user2@gmail.com", "0987654321", "098-7654", "password")));
     }
 
     public boolean containsItem(String title, ItemType type) {
@@ -63,8 +63,12 @@ public class Library {
         if (userList.containsUser(user)==null) {
             return false;
         }
-        currentUser = user;
+        currentUser = userList.containsUser(user);
         return true;
+    }
+
+    public String getCurrentUserInformation() {
+        return currentUser.getDetails();
     }
 
     @Override
@@ -77,5 +81,4 @@ public class Library {
     public int hashCode() {
         return Objects.hash(itemList);
     }
-
 }

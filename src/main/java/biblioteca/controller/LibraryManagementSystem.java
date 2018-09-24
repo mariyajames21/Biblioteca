@@ -43,7 +43,9 @@ public class LibraryManagementSystem {
 
     private void printMenu(Menu[] menu) {
         for (Menu menuItem : menu) {
-            outputDriver.print(menuItem.display(library));
+            if(menuItem.isPrintable()|| library.isLoggedIn()) {
+                outputDriver.print(menuItem.display());
+            }
         }
     }
 }
