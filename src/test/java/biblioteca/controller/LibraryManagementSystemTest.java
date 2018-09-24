@@ -20,7 +20,8 @@ class LibraryManagementSystemTest {
     private OutputDriver outputDriver;
     private InputDriver inputDriver;
     private Library library;
-    private List<Movie> movies;
+    User user = new User("123-4567","qwertyuiop");
+
 
     @BeforeEach
     void init() {
@@ -28,11 +29,12 @@ class LibraryManagementSystemTest {
         inputDriver = mock(InputDriver.class);
         List<Item> items = new ArrayList<>();
         items.add(new Book("The Hobbit", "J R R Tolkien", "1937"));
-        items.add(new Book("The  Fault in our stars", "John Green", "2014"));
+        items.add(new Book("The Fault in our stars", "John Green", "2012"));
         items.add(new Movie("Movie 1", "2015", "Director 1", 7));
         items.add(new Movie("Movie 2", "1990", "Director 2", 0));
         ItemList itemList = new ItemList(items);
         library = new Library(itemList);
+        library.login(user);
         libraryManagementSystem = new LibraryManagementSystem(outputDriver,inputDriver,library);
     }
 
@@ -71,10 +73,16 @@ class LibraryManagementSystemTest {
     @DisplayName("Print the menu and take the action when an invalid option  is selected")
     @Test
     void testForInvalidOption(){
-        when(inputDriver.readMenuChoice()).thenReturn(6).thenReturn(0);
+        when(inputDriver.readMenuChoice()).thenReturn(9).thenReturn(0);
         libraryManagementSystem.showMenu();
         verify(outputDriver,times(2)).print("0.Exit from application");
         verify(outputDriver,times(2)).print("1.List of books");
+        verify(outputDriver,times(2)).print("2.Checkout books");
+        verify(outputDriver,times(2)).print("3.Return book");
+        verify(outputDriver,times(2)).print("4.List of movies");
+        verify(outputDriver,times(2)).print("5.Checkout movies");
+        verify(outputDriver,times(2)).print("6.Return movie");
+        verify(outputDriver,times(2)).print("7.Log out");
         verify(outputDriver).print("Select a valid option!");
     }
 

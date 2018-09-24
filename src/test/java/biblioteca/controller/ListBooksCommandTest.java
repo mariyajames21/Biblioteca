@@ -21,14 +21,13 @@ class ListBooksCommandTest {
     private OutputDriver outputDriver;
     private InputDriver inputDriver;
     private ListBooksCommand listBooksCommand;
-    private User user= new User();
 
 
     @BeforeEach
     void init() {
         List<Item> items = new ArrayList<>();
         items.add(new Book("The Hobbit", "J R R Tolkien", "1937"));
-        items.add(new Book("The  Fault in our stars", "John Green", "2014"));
+        items.add(new Book("The Fault in our stars", "John Green", "2012"));
         items.add(new Movie("Movie 1", "2015", "Director 1", 7));
         items.add(new Movie("Movie 2", "1990", "Director 2", 0));
         ItemList itemList = new ItemList(items);
@@ -44,7 +43,7 @@ class ListBooksCommandTest {
     @Test
     void testForPrintListOfBooks() {
         List<List<String>> stringList = Arrays.asList(Arrays.asList("The Hobbit", "J R R Tolkien", "1937"), Arrays.asList("The Fault in our stars", "John Green", "2012"));
-        listBooksCommand.perform(library, user, inputDriver, outputDriver);
+        listBooksCommand.perform(library,  inputDriver, outputDriver);
         verify(outputDriver).printAsColumns(stringList);
     }
 

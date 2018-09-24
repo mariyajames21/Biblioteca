@@ -22,7 +22,7 @@ class ReturnBookCommandTest {
     private OutputDriver outputDriver;
     private InputDriver inputDriver;
     private ReturnBookCommand returnBookCommand;
-    private User user= new User();
+    private User user= new User("123-4567","qwertyuiop");
 
 
     @BeforeEach
@@ -34,6 +34,7 @@ class ReturnBookCommandTest {
         items.add(new Movie("Movie 2", "1990", "Director 2", 0));
         ItemList itemList = new ItemList(items);
         library = new Library(itemList);
+        library.login(user);
         outputDriver = mock(OutputDriver.class);
         inputDriver = mock(InputDriver.class);
         returnBookCommand = new ReturnBookCommand();
@@ -44,7 +45,7 @@ class ReturnBookCommandTest {
     @Test
     void testForReturnBook() {
         when(inputDriver.readString()).thenReturn("The Hobbit");
-        returnBookCommand.perform(library, user, inputDriver, outputDriver);
+        returnBookCommand.perform(library,  inputDriver, outputDriver);
         assertTrue(library.containsItem("The Hobbit", ItemType.BOOK));
     }
 
@@ -52,7 +53,7 @@ class ReturnBookCommandTest {
     @Test
     void testForInvalidReturnBookTitle() {
         when(inputDriver.readString()).thenReturn("Spy");
-        returnBookCommand.perform(library, user, inputDriver, outputDriver);
+        returnBookCommand.perform(library,  inputDriver, outputDriver);
         verify(outputDriver).print("Enter the name of the book");
         verify(outputDriver).print("That is not a valid book to return");
     }
@@ -61,7 +62,7 @@ class ReturnBookCommandTest {
     @Test
     void testForInvalidReturnBook() {
         when(inputDriver.readString()).thenReturn("The Hobbit");
-        returnBookCommand.perform(library, user, inputDriver, outputDriver);
+        returnBookCommand.perform(library,  inputDriver, outputDriver);
         verify(outputDriver).print("Enter the name of the book");
         verify(outputDriver).print("That is not a valid book to return");
     }

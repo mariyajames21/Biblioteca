@@ -17,7 +17,7 @@ class LibraryTest {
 
     private Library library;
     private ItemList itemList;
-    private User loggedInUser = new User();
+    private User loggedInUser = new User("123-4567","qwertyuiop");
 
     @BeforeEach
     void init() {
@@ -28,6 +28,7 @@ class LibraryTest {
         items.add(new Movie("Movie 2", "1990", "Director 2", 0));
         itemList = new ItemList(items);
         library = new Library(itemList);
+        library.login(loggedInUser);
     }
 
     @DisplayName("expects to print the list of books")
@@ -66,7 +67,7 @@ class LibraryTest {
     @Test
     void testToCheckOutABook() {
         String title = "The Hobbit";
-        assertTrue(library.checkOutItem(title, BOOK, loggedInUser));
+        assertTrue(library.checkOutItem(title, BOOK));
         assertFalse(library.containsItem(title, BOOK));
     }
 
@@ -74,7 +75,7 @@ class LibraryTest {
     @Test
     void testToCheckOutABookNotAvailable() {
         String title = "Spy";
-        assertFalse(library.checkOutItem(title, BOOK, loggedInUser));
+        assertFalse(library.checkOutItem(title, BOOK));
     }
 
 
@@ -82,9 +83,9 @@ class LibraryTest {
     @Test
     void testToReturnBook() {
         String title = "The Hobbit";
-        assertTrue(library.checkOutItem(title, BOOK, loggedInUser));
+        assertTrue(library.checkOutItem(title, BOOK));
         assertFalse(library.containsItem(title, BOOK));
-        library.returnItem(title, BOOK,loggedInUser);
+        library.returnItem(title, BOOK);
         assertTrue(library.containsItem(title, BOOK));
     }
 
@@ -124,7 +125,7 @@ class LibraryTest {
     @Test
     void testToCheckOutAItem() {
         String title = "Movie 1";
-        assertTrue(library.checkOutItem(title,MOVIE, loggedInUser));
+        assertTrue(library.checkOutItem(title,MOVIE));
         assertFalse(library.containsItem(title,MOVIE));
     }
 
@@ -132,7 +133,7 @@ class LibraryTest {
     @Test
     void testToCheckOutAItemNotAvailable() {
         String title = "Spy";
-        assertFalse(library.checkOutItem(title, MOVIE, loggedInUser));
+        assertFalse(library.checkOutItem(title, MOVIE));
     }
 
 
@@ -140,9 +141,9 @@ class LibraryTest {
     @Test
     void testToReturnItem() {
         String title = "Movie 1";
-        assertTrue(library.checkOutItem(title,MOVIE, loggedInUser));
+        assertTrue(library.checkOutItem(title,MOVIE));
         assertFalse(library.containsItem(title,MOVIE));
-        library.returnItem(title,MOVIE,loggedInUser);
+        library.returnItem(title,MOVIE);
         assertTrue(library.containsItem(title,MOVIE));
     }
 
@@ -150,6 +151,6 @@ class LibraryTest {
     @Test
     void testToNotReturnAWrongBook() {
         String title = "Movie";
-        assertFalse(library.returnItem(title,MOVIE,loggedInUser));
+        assertFalse(library.returnItem(title,MOVIE));
     }
 }

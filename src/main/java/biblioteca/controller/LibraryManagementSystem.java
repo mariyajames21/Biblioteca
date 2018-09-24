@@ -43,7 +43,7 @@ public class LibraryManagementSystem {
 
     private void printMenu(Menu[] menu) {
         for (Menu menuItem : menu) {
-            outputDriver.print(menuItem.display());
+            outputDriver.print(menuItem.display(library));
         }
     }
 }

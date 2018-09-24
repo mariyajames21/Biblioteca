@@ -23,7 +23,7 @@ class CheckOutMoviesCommandTest {
     private OutputDriver outputDriver;
     private InputDriver inputDriver;
     private CheckOutMoviesCommand checkOutMoviesCommand;
-    private User user= new User();
+    User user = new User("123-4567","qwertyuiop");
 
     @BeforeEach
     void init() {
@@ -34,6 +34,7 @@ class CheckOutMoviesCommandTest {
         items.add(new Movie("Movie 2", "1990", "Director 2", 0));
         ItemList itemList = new ItemList(items);
         library = new Library(itemList);
+        library.login(user);
         outputDriver = mock(OutputDriver.class);
         inputDriver = mock(InputDriver.class);
         checkOutMoviesCommand = new CheckOutMoviesCommand();
@@ -44,7 +45,7 @@ class CheckOutMoviesCommandTest {
     @Test
     void testForCheckout() {
         when(inputDriver.readString()).thenReturn("Movie 1");
-        checkOutMoviesCommand.perform(library, user, inputDriver, outputDriver);
+        checkOutMoviesCommand.perform(library,  inputDriver, outputDriver);
         assertFalse(library.containsItem("Movie 1", ItemType.BOOK));
         verify(outputDriver).print("Enter the name of the movie.");
         verify(outputDriver).print("Thank you! Enjoy the movie");
@@ -54,7 +55,7 @@ class CheckOutMoviesCommandTest {
     @Test
     void testForCheckoutMovieNotAvailable() {
         when(inputDriver.readString()).thenReturn("Spy");
-        checkOutMoviesCommand.perform(library, user, inputDriver, outputDriver);
+        checkOutMoviesCommand.perform(library, inputDriver, outputDriver);
         verify(outputDriver).print("Enter the name of the movie.");
         verify(outputDriver).print("That movie is not available");
     }

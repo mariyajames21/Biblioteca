@@ -52,7 +52,7 @@ public class Library {
     }
 
     public boolean isLoggedIn() {
-        return currentUser==null;
+        return currentUser!=null;
     }
 
     public void logout() {

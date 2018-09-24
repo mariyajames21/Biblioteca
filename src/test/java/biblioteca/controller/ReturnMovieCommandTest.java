@@ -22,7 +22,7 @@ class ReturnMovieCommandTest {
     private OutputDriver outputDriver;
     private InputDriver inputDriver;
     private ReturnMovieCommand returnMovieCommand;
-    private User user= new User();
+    User user= new User("123-4567","qwertyuiop");
 
 
     @BeforeEach
@@ -34,6 +34,7 @@ class ReturnMovieCommandTest {
         items.add(new Movie("Movie 2", "1990", "Director 2", 0));
         ItemList itemList = new ItemList(items);
         library = new Library(itemList);
+        library.login(user);
         outputDriver = mock(OutputDriver.class);
         inputDriver = mock(InputDriver.class);
         returnMovieCommand = new ReturnMovieCommand();
@@ -43,16 +44,16 @@ class ReturnMovieCommandTest {
     @DisplayName("expects to add movie  back to the library")
     @Test
     void testForReturnMovie() {
-        when(inputDriver.readString()).thenReturn("Movie 1").thenReturn("Movie 1");
-        returnMovieCommand.perform(library, user, inputDriver, outputDriver);
-        assertTrue(library.containsItem("Movie 1", ItemType.BOOK));
+        when(inputDriver.readString()).thenReturn("Movie 1");
+        returnMovieCommand.perform(library, inputDriver, outputDriver);
+        assertTrue(library.containsItem("Movie 1", ItemType.MOVIE));
     }
 
     @DisplayName("expects to print message 'That is not a valid movie' if the title is wrong")
     @Test
     void testForInvalidReturnMovieTitle() {
         when(inputDriver.readString()).thenReturn("Spy");
-        returnMovieCommand.perform(library, user, inputDriver, outputDriver);
+        returnMovieCommand.perform(library, inputDriver, outputDriver);
         verify(outputDriver).print("Enter the name of the movie");
         verify(outputDriver).print("That is not a valid movie to return");
     }
@@ -61,7 +62,7 @@ class ReturnMovieCommandTest {
     @Test
     void testForInvalidReturnMovie() {
         when(inputDriver.readString()).thenReturn("Movie 1");
-        returnMovieCommand.perform(library, user, inputDriver, outputDriver);
+        returnMovieCommand.perform(library,  inputDriver, outputDriver);
         verify(outputDriver).print("Enter the name of the movie");
         verify(outputDriver).print("That is not a valid movie to return");
     }

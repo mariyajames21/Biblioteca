@@ -23,7 +23,7 @@ class CheckOutBookCommandTest {
     private OutputDriver outputDriver;
     private InputDriver inputDriver;
     private CheckOutBookCommand checkOutBookCommand;
-    private User user= new User();
+    User user = new User("123-4567","qwertyuiop");
 
     @BeforeEach
     void init() {
@@ -37,6 +37,7 @@ class CheckOutBookCommandTest {
         outputDriver = mock(OutputDriver.class);
         inputDriver = mock(InputDriver.class);
         checkOutBookCommand = new CheckOutBookCommand();
+        library.login(user);
 
     }
 
@@ -44,7 +45,7 @@ class CheckOutBookCommandTest {
     @Test
     void testForCheckout() {
         when(inputDriver.readString()).thenReturn("The Hobbit");
-        checkOutBookCommand.perform(library, user, inputDriver, outputDriver);
+        checkOutBookCommand.perform(library,  inputDriver, outputDriver);
         assertFalse(library.containsItem("The Hobbit", ItemType.BOOK));
         verify(outputDriver).print("Enter the name of the book.");
         verify(outputDriver).print("Thank you! Enjoy the book");
@@ -54,7 +55,7 @@ class CheckOutBookCommandTest {
     @Test
     void testForCheckoutBookNotAvailable() {
         when(inputDriver.readString()).thenReturn("Spy");
-        checkOutBookCommand.perform(library, user, inputDriver, outputDriver);
+        checkOutBookCommand.perform(library,  inputDriver, outputDriver);
         verify(outputDriver).print("Enter the name of the book.");
         verify(outputDriver).print("That book is not available");
     }

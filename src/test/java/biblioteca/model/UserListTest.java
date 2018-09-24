@@ -18,13 +18,15 @@ class UserListTest {
     @DisplayName("returns true if the usernumber and password are correct")
     @Test
     void testForCorrectUserDetails(){
-        assertTrue(userList.containsUser(new User("123-4567","qwertyuiop")));
+        User user=new User("123-4567","qwertyuiop");
+        assertEquals(user,userList.containsUser(user));
     }
 
     @DisplayName("returns false if the usernumber and password are incorrect")
     @Test
     void testForWrongUserDetails(){
-        assertFalse(userList.containsUser(new User("345-6789","xcvbn")));
+        User user = new User("345-6789","xcvbn");
+        assertNull(userList.containsUser(user));
     }
 
 }

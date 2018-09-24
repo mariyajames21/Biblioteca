@@ -18,7 +18,7 @@ public class AuthenticatorCommand implements Command {
 
     @Override
     public void perform(Library library, InputDriver inputDriver, OutputDriver outputDriver) {
-        if (library.isLoggedIn()) {
+        if (!library.isLoggedIn()) {
             if (login(library, outputDriver, inputDriver)) {
                 return;
             }

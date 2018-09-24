@@ -24,18 +24,19 @@ class MenuTest {
     private Library library;
     private OutputDriver outputDriver;
     private InputDriver inputDriver;
-    private User user = new User();
+    private User user = new User("123-4567", "qwertyuiop");
 
 
     @BeforeEach
     void init() {
         List<Item> items = new ArrayList<>();
         items.add(new Book("The Hobbit", "J R R Tolkien", "1937"));
-        items.add(new Book("The  Fault in our stars", "John Green", "2014"));
+        items.add(new Book("The Fault in our stars", "John Green", "2012"));
         items.add(new Movie("Movie 1", "2015", "Director 1", 7));
         items.add(new Movie("Movie 2", "1990", "Director 2", 0));
         ItemList itemList = new ItemList(items);
         library = new Library(itemList);
+        library.login(user);
         outputDriver = mock(OutputDriver.class);
         inputDriver = mock(InputDriver.class);
     }
@@ -56,7 +57,7 @@ class MenuTest {
     @Test
     void testForPrintListOfBooks() {
         List<List<String>> stringList = Arrays.asList(Arrays.asList("The Hobbit", "J R R Tolkien", "1937"), Arrays.asList("The Fault in our stars", "John Green", "2012"));
-        LIST_OF_BOOKS.perform(library, user, outputDriver, inputDriver);
+        LIST_OF_BOOKS.perform(library, outputDriver, inputDriver);
         verify(outputDriver).printAsColumns(stringList);
     }
 
@@ -64,7 +65,7 @@ class MenuTest {
     @Test
     void testForCheckout() {
         when(inputDriver.readString()).thenReturn("The Hobbit");
-        CHECKOUT_BOOKS.perform(library, user, outputDriver, inputDriver);
+        CHECKOUT_BOOKS.perform(library, outputDriver, inputDriver);
         assertFalse(library.containsItem("The Hobbit", ItemType.BOOK));
         verify(outputDriver).print("Enter the name of the book.");
         verify(outputDriver).print("Thank you! Enjoy the book");
@@ -74,7 +75,7 @@ class MenuTest {
     @Test
     void testForCheckoutBookNotAvailable() {
         when(inputDriver.readString()).thenReturn("Spy");
-        CHECKOUT_BOOKS.perform(library, user,outputDriver, inputDriver);
+        CHECKOUT_BOOKS.perform(library, outputDriver, inputDriver);
         verify(outputDriver).print("Enter the name of the book.");
         verify(outputDriver).print("That book is not available");
     }
@@ -83,8 +84,8 @@ class MenuTest {
     @Test
     void testForReturnBook() {
         when(inputDriver.readString()).thenReturn("The Hobbit");
-        CHECKOUT_BOOKS.perform(library, user,outputDriver, inputDriver);
-        Menu.RETURN_BOOK.perform(library, user, outputDriver, inputDriver);
+        CHECKOUT_BOOKS.perform(library, outputDriver, inputDriver);
+        Menu.RETURN_BOOK.perform(library, outputDriver, inputDriver);
         assertTrue(library.containsItem("The Hobbit", ItemType.BOOK));
     }
 
@@ -92,7 +93,7 @@ class MenuTest {
     @Test
     void testForInvalidReturnBookTitle() {
         when(inputDriver.readString()).thenReturn("Spy");
-        Menu.RETURN_BOOK.perform(library, user,outputDriver, inputDriver);
+        Menu.RETURN_BOOK.perform(library, outputDriver, inputDriver);
         verify(outputDriver).print("Enter the name of the book");
         verify(outputDriver).print("That is not a valid book to return");
     }
@@ -101,7 +102,7 @@ class MenuTest {
     @Test
     void testForInvalidReturnBook() {
         when(inputDriver.readString()).thenReturn("The Hobbit");
-        Menu.RETURN_BOOK.perform(library, user,outputDriver, inputDriver);
+        Menu.RETURN_BOOK.perform(library, outputDriver, inputDriver);
         verify(outputDriver).print("Enter the name of the book");
         verify(outputDriver).print("That is not a valid book to return");
     }

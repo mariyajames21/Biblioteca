@@ -20,7 +20,6 @@ class ListMoviesCommandTest {
     private OutputDriver outputDriver;
     private InputDriver inputDriver;
     private ListMoviesCommand listMoviesCommand;
-    private User user= new User();
 
 
     @BeforeEach
@@ -44,7 +43,7 @@ class ListMoviesCommandTest {
     void testForPrintListOfBooks() {
         List<List<String>> stringList = Arrays.asList(Arrays.asList("Movie 1", "2015", "Director 1", "7"),
                 Arrays.asList("Movie 2", "1990", "Director 2", "Unrated"));
-        listMoviesCommand.perform(library, user, inputDriver, outputDriver);
+        listMoviesCommand.perform(library,  inputDriver, outputDriver);
         verify(outputDriver).printAsColumns(stringList);
     }
 

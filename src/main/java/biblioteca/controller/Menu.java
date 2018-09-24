@@ -15,7 +15,15 @@ public enum Menu {
     LIST_OF_MOVIES("List of movies",new ListMoviesCommand()),
     CHECK_OUT_MOVIES("Checkout movies",new AuthenticatorCommand(new CheckOutMoviesCommand())),
     RETURN_MOVIE("Return movie",new AuthenticatorCommand(new ReturnMovieCommand())),
-    LOG_OUT("Log out from the application",new AuthenticatorCommand(new LogOutCommand()));
+    LOG_OUT("Log out",new AuthenticatorCommand(new LogOutCommand())){
+        @Override
+        public String display(Library library) {
+            if(library.isLoggedIn()){
+                return this.ordinal() + "." +"Log out";
+            }
+            return "";
+        }
+    };
 
     private String displayString;
     private Command action;
@@ -25,7 +33,7 @@ public enum Menu {
         this.action=action;
     }
 
-    public String display() {
+    public String display(Library library) {
         return this.ordinal() + "." + displayString;
     }
 

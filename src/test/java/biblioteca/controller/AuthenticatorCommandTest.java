@@ -23,7 +23,6 @@ class AuthenticatorCommandTest {
     private OutputDriver outputDriver;
     private InputDriver inputDriver;
     private AuthenticatorCommand authenticatorCommand;
-    private User user= new User();
 
     @BeforeEach
     void init() {
@@ -45,9 +44,9 @@ class AuthenticatorCommandTest {
     @Test
     void testUserDetailsTrue() {
         when(inputDriver.readString()).thenReturn("123-4567").thenReturn("qwertyuiop");
-        authenticatorCommand.perform(library, user, inputDriver, outputDriver);
+        authenticatorCommand.perform(library, inputDriver, outputDriver);
         verify(outputDriver).print("You are not logged in. Please log in");
-        verify(outputDriver).print("Enter you user name");
+        verify(outputDriver).print("Enter you usernumber");
         verify(outputDriver).print("Enter Password");
         verify(outputDriver).print("Enter the name of the book.");
 
@@ -57,9 +56,9 @@ class AuthenticatorCommandTest {
     @Test
     void testUserDetailsFalse() {
         when(inputDriver.readString()).thenReturn("123-4560").thenReturn("qwertyuiop");
-        authenticatorCommand.perform(library, user, inputDriver, outputDriver);
+        authenticatorCommand.perform(library, inputDriver, outputDriver);
         verify(outputDriver).print("You are not logged in. Please log in");
-        verify(outputDriver).print("Enter you user name");
+        verify(outputDriver).print("Enter you usernumber");
         verify(outputDriver).print("Enter Password");
         verify(outputDriver).print("Incorrect usernumber or password");
 

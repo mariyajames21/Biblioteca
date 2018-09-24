@@ -21,7 +21,6 @@ class ExitCommandTest {
     private OutputDriver outputDriver;
     private InputDriver inputDriver;
     private ExitCommand exitCommand;
-    private User user= new User();
 
 
     @BeforeEach
@@ -42,7 +41,7 @@ class ExitCommandTest {
     @DisplayName("expects to return 'Exit from application' for LIST_OF_BOOKS enum")
     @Test
     void testForExitFromApplication() {
-        exitCommand.perform(library, user, inputDriver, outputDriver);
+        exitCommand.perform(library, inputDriver, outputDriver);
         verify(outputDriver).print("Quiting...");
     }
 
