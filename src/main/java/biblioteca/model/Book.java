@@ -13,6 +13,7 @@ public class Book implements Item{
     private String author;
     private String year;
     private final ItemType type;
+    private User user;
 
 
     public Book(String title, String author, String year) {

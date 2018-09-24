@@ -1,5 +1,6 @@
 package biblioteca.controller;
 
+import biblioteca.controller.command.AuthenticatorCommand;
 import biblioteca.controller.command.CheckOutBookCommand;
 import biblioteca.model.*;
 import biblioteca.view.InputDriver;
@@ -12,17 +13,16 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-class CheckOutBookCommandTest {
 
+class AuthenticatorCommandTest {
     private Library library;
     private OutputDriver outputDriver;
     private InputDriver inputDriver;
-    private CheckOutBookCommand checkOutBookCommand;
+    private AuthenticatorCommand authenticatorCommand;
     private User user= new User();
 
     @BeforeEach
@@ -36,28 +36,33 @@ class CheckOutBookCommandTest {
         library = new Library(itemList);
         outputDriver = mock(OutputDriver.class);
         inputDriver = mock(InputDriver.class);
-        checkOutBookCommand = new CheckOutBookCommand();
+        authenticatorCommand = new AuthenticatorCommand(new CheckOutBookCommand());
 
     }
 
-    @DisplayName("expects to remove book from library")
+
+    @DisplayName("Should authenticate if the usernumber and password are correct")
     @Test
-    void testForCheckout() {
-        when(inputDriver.readString()).thenReturn("The Hobbit");
-        checkOutBookCommand.perform(library, user, inputDriver, outputDriver);
-        assertFalse(library.containsItem("The Hobbit", ItemType.BOOK));
+    void testUserDetailsTrue() {
+        when(inputDriver.readString()).thenReturn("123-4567").thenReturn("qwertyuiop");
+        authenticatorCommand.perform(library, user, inputDriver, outputDriver);
+        verify(outputDriver).print("You are not logged in. Please log in");
+        verify(outputDriver).print("Enter you user name");
+        verify(outputDriver).print("Enter Password");
         verify(outputDriver).print("Enter the name of the book.");
-        verify(outputDriver).print("Thank you! Enjoy the book");
+
     }
 
-    @DisplayName("expects to print message 'That book is not available'")
+    @DisplayName("Should not authenticate if the usernumber and password are correct")
     @Test
-    void testForCheckoutBookNotAvailable() {
-        when(inputDriver.readString()).thenReturn("Spy");
-        checkOutBookCommand.perform(library, user, inputDriver, outputDriver);
-        verify(outputDriver).print("Enter the name of the book.");
-        verify(outputDriver).print("That book is not available");
-    }
+    void testUserDetailsFalse() {
+        when(inputDriver.readString()).thenReturn("123-4560").thenReturn("qwertyuiop");
+        authenticatorCommand.perform(library, user, inputDriver, outputDriver);
+        verify(outputDriver).print("You are not logged in. Please log in");
+        verify(outputDriver).print("Enter you user name");
+        verify(outputDriver).print("Enter Password");
+        verify(outputDriver).print("Incorrect usernumber or password");
 
+    }
 
 }

@@ -1,4 +1,5 @@
-import biblioteca.model.*;
+package biblioteca.model;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,6 +17,7 @@ class LibraryTest {
 
     private Library library;
     private ItemList itemList;
+    private User loggedInUser = new User();
 
     @BeforeEach
     void init() {
@@ -64,7 +66,7 @@ class LibraryTest {
     @Test
     void testToCheckOutABook() {
         String title = "The Hobbit";
-        assertTrue(library.checkOutItem(title, BOOK));
+        assertTrue(library.checkOutItem(title, BOOK, loggedInUser));
         assertFalse(library.containsItem(title, BOOK));
     }
 
@@ -72,7 +74,7 @@ class LibraryTest {
     @Test
     void testToCheckOutABookNotAvailable() {
         String title = "Spy";
-        assertFalse(library.checkOutItem(title, BOOK));
+        assertFalse(library.checkOutItem(title, BOOK, loggedInUser));
     }
 
 
@@ -80,7 +82,7 @@ class LibraryTest {
     @Test
     void testToReturnBook() {
         String title = "The Hobbit";
-        assertTrue(library.checkOutItem(title, BOOK));
+        assertTrue(library.checkOutItem(title, BOOK, loggedInUser));
         assertFalse(library.containsItem(title, BOOK));
         library.returnItem(title, BOOK);
         assertTrue(library.containsItem(title, BOOK));
@@ -122,7 +124,7 @@ class LibraryTest {
     @Test
     void testToCheckOutAItem() {
         String title = "Item 1";
-        assertTrue(library.checkOutItem(title,MOVIE));
+        assertTrue(library.checkOutItem(title,MOVIE, loggedInUser));
         assertFalse(library.containsItem(title,MOVIE));
     }
 
@@ -130,7 +132,7 @@ class LibraryTest {
     @Test
     void testToCheckOutAItemNotAvailable() {
         String title = "Spy";
-        assertFalse(library.checkOutItem(title, MOVIE));
+        assertFalse(library.checkOutItem(title, MOVIE, loggedInUser));
     }
 
 
@@ -138,7 +140,7 @@ class LibraryTest {
     @Test
     void testToReturnItem() {
         String title = "Movie 1";
-        assertTrue(library.checkOutItem(title,MOVIE));
+        assertTrue(library.checkOutItem(title,MOVIE, loggedInUser));
         assertFalse(library.containsItem(title,MOVIE));
         library.returnItem(title,MOVIE);
         assertTrue(library.containsItem(title,MOVIE));

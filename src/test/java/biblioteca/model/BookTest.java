@@ -1,3 +1,5 @@
+package biblioteca.model;
+
 import biblioteca.model.Book;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

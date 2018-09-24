@@ -8,12 +8,14 @@ import java.util.Objects;
 public class Library {
 
     private final ItemList itemList;
+    private final UserList loggedInUserList;
     private ItemList checkedOutItemList;
 
 
     public Library(ItemList itemList) {
         this.itemList = itemList;
         checkedOutItemList = new ItemList(new ArrayList<>());
+        loggedInUserList = new UserList();
     }
 
 
@@ -21,10 +23,10 @@ public class Library {
         return itemList.containsItem(title, type);
     }
 
-    public boolean checkOutItem(String title, ItemType type) {
+    public boolean checkOutItem(String title, ItemType type, User loggedInUser) {
         Item checkedOutItem = itemList.removeItemIfPresent(title, type);
         if (checkedOutItem != null) {
-            checkedOutItemList.addItem(checkedOutItem);
+            loggedInUser.addItem(checkedOutItem);
             return true;
         }
         return false;

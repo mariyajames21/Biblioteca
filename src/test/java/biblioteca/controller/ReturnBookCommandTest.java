@@ -1,5 +1,6 @@
 package biblioteca.controller;
 
+import biblioteca.controller.command.ReturnBookCommand;
 import biblioteca.model.*;
 import biblioteca.view.InputDriver;
 import biblioteca.view.OutputDriver;
@@ -8,6 +9,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -20,6 +22,7 @@ class ReturnBookCommandTest {
     private OutputDriver outputDriver;
     private InputDriver inputDriver;
     private ReturnBookCommand returnBookCommand;
+    private User user= new User();
 
 
     @BeforeEach
@@ -34,13 +37,14 @@ class ReturnBookCommandTest {
         outputDriver = mock(OutputDriver.class);
         inputDriver = mock(InputDriver.class);
         returnBookCommand = new ReturnBookCommand();
+
     }
 
     @DisplayName("expects to addItem the book back to the library")
     @Test
     void testForReturnBook() {
         when(inputDriver.readString()).thenReturn("The Hobbit");
-        returnBookCommand.perform(library,outputDriver,inputDriver);
+        returnBookCommand.perform(library, user, inputDriver, outputDriver);
         assertTrue(library.containsItem("The Hobbit", ItemType.BOOK));
     }
 
@@ -48,7 +52,7 @@ class ReturnBookCommandTest {
     @Test
     void testForInvalidReturnBookTitle() {
         when(inputDriver.readString()).thenReturn("Spy");
-        returnBookCommand.perform(library,outputDriver,inputDriver);
+        returnBookCommand.perform(library, user, inputDriver, outputDriver);
         verify(outputDriver).print("Enter the name of the book");
         verify(outputDriver).print("That is not a valid book to return");
     }
@@ -57,7 +61,7 @@ class ReturnBookCommandTest {
     @Test
     void testForInvalidReturnBook() {
         when(inputDriver.readString()).thenReturn("The Hobbit");
-        returnBookCommand.perform(library,outputDriver,inputDriver);
+        returnBookCommand.perform(library, user, inputDriver, outputDriver);
         verify(outputDriver).print("Enter the name of the book");
         verify(outputDriver).print("That is not a valid book to return");
     }

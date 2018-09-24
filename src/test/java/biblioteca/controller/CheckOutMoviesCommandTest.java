@@ -1,5 +1,6 @@
 package biblioteca.controller;
 
+import biblioteca.controller.command.CheckOutMoviesCommand;
 import biblioteca.model.*;
 import biblioteca.view.InputDriver;
 import biblioteca.view.OutputDriver;
@@ -8,6 +9,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -21,6 +23,7 @@ class CheckOutMoviesCommandTest {
     private OutputDriver outputDriver;
     private InputDriver inputDriver;
     private CheckOutMoviesCommand checkOutMoviesCommand;
+    private User user= new User();
 
     @BeforeEach
     void init() {
@@ -34,13 +37,14 @@ class CheckOutMoviesCommandTest {
         outputDriver = mock(OutputDriver.class);
         inputDriver = mock(InputDriver.class);
         checkOutMoviesCommand = new CheckOutMoviesCommand();
+
     }
 
     @DisplayName("expects to remove movie from library")
     @Test
     void testForCheckout() {
         when(inputDriver.readString()).thenReturn("Movie 1");
-        checkOutMoviesCommand.perform(library, outputDriver, inputDriver);
+        checkOutMoviesCommand.perform(library, user, inputDriver, outputDriver);
         assertFalse(library.containsItem("Movie 1", ItemType.BOOK));
         verify(outputDriver).print("Enter the name of the movie.");
         verify(outputDriver).print("Thank you! Enjoy the movie");
@@ -50,7 +54,7 @@ class CheckOutMoviesCommandTest {
     @Test
     void testForCheckoutMovieNotAvailable() {
         when(inputDriver.readString()).thenReturn("Spy");
-        checkOutMoviesCommand.perform(library, outputDriver, inputDriver);
+        checkOutMoviesCommand.perform(library, user, inputDriver, outputDriver);
         verify(outputDriver).print("Enter the name of the movie.");
         verify(outputDriver).print("That movie is not available");
     }

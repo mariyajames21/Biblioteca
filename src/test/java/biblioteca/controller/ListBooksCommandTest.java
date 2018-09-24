@@ -1,5 +1,6 @@
 package biblioteca.controller;
 
+import biblioteca.controller.command.ListBooksCommand;
 import biblioteca.model.*;
 import biblioteca.view.InputDriver;
 import biblioteca.view.OutputDriver;
@@ -20,6 +21,7 @@ class ListBooksCommandTest {
     private OutputDriver outputDriver;
     private InputDriver inputDriver;
     private ListBooksCommand listBooksCommand;
+    private User user= new User();
 
 
     @BeforeEach
@@ -34,6 +36,7 @@ class ListBooksCommandTest {
         outputDriver = mock(OutputDriver.class);
         inputDriver = mock(InputDriver.class);
         listBooksCommand = new ListBooksCommand();
+
     }
 
 
@@ -41,7 +44,7 @@ class ListBooksCommandTest {
     @Test
     void testForPrintListOfBooks() {
         List<List<String>> stringList = Arrays.asList(Arrays.asList("The Hobbit", "J R R Tolkien", "1937"), Arrays.asList("The Fault in our stars", "John Green", "2012"));
-        listBooksCommand.perform(library, outputDriver, inputDriver);
+        listBooksCommand.perform(library, user, inputDriver, outputDriver);
         verify(outputDriver).printAsColumns(stringList);
     }
 

@@ -1,5 +1,6 @@
 package biblioteca.controller;
 
+import biblioteca.controller.command.ReturnMovieCommand;
 import biblioteca.model.*;
 import biblioteca.view.InputDriver;
 import biblioteca.view.OutputDriver;
@@ -8,6 +9,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -20,6 +22,7 @@ class ReturnMovieCommandTest {
     private OutputDriver outputDriver;
     private InputDriver inputDriver;
     private ReturnMovieCommand returnMovieCommand;
+    private User user= new User();
 
 
     @BeforeEach
@@ -34,13 +37,14 @@ class ReturnMovieCommandTest {
         outputDriver = mock(OutputDriver.class);
         inputDriver = mock(InputDriver.class);
         returnMovieCommand = new ReturnMovieCommand();
+
     }
 
     @DisplayName("expects to add movie  back to the library")
     @Test
     void testForReturnMovie() {
         when(inputDriver.readString()).thenReturn("Movie 1").thenReturn("Movie 1");
-        returnMovieCommand.perform(library,outputDriver,inputDriver);
+        returnMovieCommand.perform(library, user, inputDriver, outputDriver);
         assertTrue(library.containsItem("Movie 1", ItemType.BOOK));
     }
 
@@ -48,7 +52,7 @@ class ReturnMovieCommandTest {
     @Test
     void testForInvalidReturnMovieTitle() {
         when(inputDriver.readString()).thenReturn("Spy");
-        returnMovieCommand.perform(library,outputDriver,inputDriver);
+        returnMovieCommand.perform(library, user, inputDriver, outputDriver);
         verify(outputDriver).print("Enter the name of the movie");
         verify(outputDriver).print("That is not a valid movie to return");
     }
@@ -57,7 +61,7 @@ class ReturnMovieCommandTest {
     @Test
     void testForInvalidReturnMovie() {
         when(inputDriver.readString()).thenReturn("Movie 1");
-        returnMovieCommand.perform(library,outputDriver,inputDriver);
+        returnMovieCommand.perform(library, user, inputDriver, outputDriver);
         verify(outputDriver).print("Enter the name of the movie");
         verify(outputDriver).print("That is not a valid movie to return");
     }

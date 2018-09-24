@@ -1,5 +1,6 @@
 package biblioteca.controller;
 
+import biblioteca.controller.command.ExitCommand;
 import biblioteca.model.*;
 import biblioteca.view.InputDriver;
 import biblioteca.view.OutputDriver;
@@ -8,6 +9,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.mockito.Mockito.mock;
@@ -19,6 +21,7 @@ class ExitCommandTest {
     private OutputDriver outputDriver;
     private InputDriver inputDriver;
     private ExitCommand exitCommand;
+    private User user= new User();
 
 
     @BeforeEach
@@ -33,12 +36,13 @@ class ExitCommandTest {
         outputDriver = mock(OutputDriver.class);
         inputDriver = mock(InputDriver.class);
         exitCommand = new ExitCommand();
+
     }
 
     @DisplayName("expects to return 'Exit from application' for LIST_OF_BOOKS enum")
     @Test
     void testForExitFromApplication() {
-        exitCommand.perform(library, outputDriver, inputDriver);
+        exitCommand.perform(library, user, inputDriver, outputDriver);
         verify(outputDriver).print("Quiting...");
     }
 
