@@ -20,7 +20,7 @@ class LibraryManagementSystemTest {
     private OutputDriver outputDriver;
     private InputDriver inputDriver;
     private Library library;
-    User user = new User(name, email, pnoneNumber, "123-4567","qwertyuiop");
+    User user = new User("User 1", "user1@gmail.com", "384975902","123-4567","qwertyuiop");
 
 
     @BeforeEach
@@ -82,7 +82,7 @@ class LibraryManagementSystemTest {
         verify(outputDriver,times(2)).print("4.List of movies");
         verify(outputDriver,times(2)).print("5.Checkout movies");
         verify(outputDriver,times(2)).print("6.Return movie");
-        verify(outputDriver,times(2)).print("7.Log out");
+        verify(outputDriver,times(2)).print("7.Get your details");
         verify(outputDriver).print("Select a valid option!");
     }
 

@@ -1,4 +1,4 @@
-package biblioteca.controller;
+package biblioteca.controller.command;
 
 import biblioteca.controller.command.Command;
 import biblioteca.model.Library;

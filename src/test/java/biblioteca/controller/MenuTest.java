@@ -24,7 +24,7 @@ class MenuTest {
     private Library library;
     private OutputDriver outputDriver;
     private InputDriver inputDriver;
-    private User user = new User(name, email, pnoneNumber, "123-4567", "qwertyuiop");
+    private User user = new User("User 1", "user1@gmail.com", "384975902", "123-4567", "qwertyuiop");
 
 
     @BeforeEach
